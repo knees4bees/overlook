@@ -29,7 +29,7 @@ describe('Customer', function() {
 
   it('should have a name', function() {
     expect(cust1.name).to.equal(customer1.name);
-    expect(cust2.id).to.not.equal(customer1.id);
+    expect(cust2.name).to.not.equal(customer1.name);
   });
 
   it('should be able to return first name only', function() {
@@ -38,6 +38,5 @@ describe('Customer', function() {
 
     expect(firstName1).to.equal('Bob');
     expect(firstName2).to.equal('Kelly');
-    expect(firstName2).to.not.equal('Bob');
   });
 });
