@@ -5,7 +5,8 @@ class Customer {
   }
 
   getFirstName() {
-    console.log('yo');
+    const splitName = this.name.split(' ');
+    return splitName[0];
   }
 };
 
