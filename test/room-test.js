@@ -46,7 +46,7 @@ describe('Room', function() {
     expect(room3.bedSize).to.equal('king');
   });
 
-  it('should have a number of bed', function() {
+  it('should have a number of beds', function() {
     expect(room1.numBeds).to.equal(1);
     expect(room2.numBeds).to.equal(2);
     expect(room3.numBeds).to.equal(1);
