@@ -1,7 +1,7 @@
 class Room {
   constructor(data) {
     this.number = data.number;
-    this.roomType = data.roomType;
+    this.type = data.roomType;
     this.bidet = data.bidet;
     this.bedSize = data.bedSize;
     this.numBeds = data.numBeds;
