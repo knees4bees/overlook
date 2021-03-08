@@ -1,0 +1,31 @@
+header {
+  background: $main-dark;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.hotel-brand {
+  margin: 0;
+  padding: 10px;
+  color: $accent-medium
+}
+
+.logo {
+  font-size: 4rem;
+  padding: 15px;
+}
+
+.hotel-name {
+  font-family: $display-font;
+  font-size: 3rem;
+}
+
+.user-info {
+  color: white;
+}
+
+.points {
+  padding-left: 20px;
+  padding-right: 25px;
+}
