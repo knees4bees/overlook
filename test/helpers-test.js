@@ -5,9 +5,25 @@ import createBookings from '../src/helpers';
 import Customer from '../src/Customer';
 import Room from '../src/Room';
 import Booking from '../src/Booking';
-import { customer1 as testCustomer1, customer2 as testCustomer2, customer3 as testCustomer3 } from './test-data';
-import { room1 as testRoom1, room2 as testRoom2, room3 as testRoom3 } from './test-data';
-import { booking1 as testBooking1, booking2 as testBooking2, booking3 as testBooking3, booking4 as testBooking4} from './test-data';
+
+import { 
+  customer1 as testCustomer1, 
+  customer2 as testCustomer2, 
+  customer3 as testCustomer3 
+} from './test-data';
+
+import { 
+  room1 as testRoom1, 
+  room2 as testRoom2, 
+  room3 as testRoom3 
+} from './test-data';
+
+import { 
+  booking1 as testBooking1, 
+  booking2 as testBooking2, 
+  booking3 as testBooking3, 
+  booking4 as testBooking4
+} from './test-data';
 
 
 describe('createBookings', function() {
@@ -18,9 +34,15 @@ describe('createBookings', function() {
   let rawBookingsData, rawCustomersData, rawRoomsData;
 
   beforeEach(function() {
-    rawBookingsData = {bookings: [testBooking1, testBooking2, testBooking3, testBooking4]};
-    rawCustomersData = {customers: [testCustomer1, testCustomer2, testCustomer3]};
-    rawRoomsData = {rooms: [testRoom1, testRoom2, testRoom3]};
+    rawBookingsData = {
+      bookings: [testBooking1, testBooking2, testBooking3, testBooking4]
+    };
+    rawCustomersData = {
+      customers: [testCustomer1, testCustomer2, testCustomer3]
+    };
+    rawRoomsData = {
+      rooms: [testRoom1, testRoom2, testRoom3]
+    };
 
     customer1 = new Customer(testCustomer1);
     customer2 = new Customer(testCustomer2);
@@ -40,7 +62,8 @@ describe('createBookings', function() {
   });
 
   it('should return an array of Booking instances', function() {
-    const myBookings = createBookings(rawBookingsData, rawCustomersData, rawRoomsData);
+    const myBookings = 
+      createBookings(rawBookingsData, rawCustomersData, rawRoomsData);
     expect(myBookings).to.have.length(4);
     expect(myBookings).to.eql(bookings);
   });

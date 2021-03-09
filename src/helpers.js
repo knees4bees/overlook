@@ -10,10 +10,14 @@ function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
   const roomsData = rawRoomsData.rooms;
 
   bookingsData.forEach(bookingData => {
-    const foundCustomer = customersData.find(customer => customer.id === bookingData.userID);
+    const foundCustomer = customersData.find(customer => {
+      return customer.id === bookingData.userID
+    });
     const customer = new Customer(foundCustomer);
 
-    const foundRoom = roomsData.find(room => room.number === bookingData.roomNumber);
+    const foundRoom = roomsData.find(room => {
+      return room.number === bookingData.roomNumber;
+    });
     const room = new Room(foundRoom);
 
     const booking = new Booking(bookingData, customer, room);

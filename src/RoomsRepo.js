@@ -9,9 +9,10 @@ class RoomsRepo {
   }
 
   filterByAvailability(bookingsRepo, date) {
-    const roomNumbersNotAvailable = bookingsRepo.filterByDate(date).bookings.map(booking => {
-      return booking.room.number;
-    });
+    const roomNumbersNotAvailable = 
+      bookingsRepo.filterByDate(date).bookings.map(booking => {
+        return booking.room.number;
+      });
 
     const availableRooms = this.rooms.filter(room => {
       return !roomNumbersNotAvailable.includes(room.number)
@@ -19,6 +20,6 @@ class RoomsRepo {
 
     return new RoomsRepo(availableRooms);
   }
-};
+}
 
 export default RoomsRepo;

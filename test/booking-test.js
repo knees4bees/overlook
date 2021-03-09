@@ -4,9 +4,25 @@ const expect = chai.expect;
 import Customer from '../src/Customer';
 import Room from '../src/Room';
 import Booking from '../src/Booking';
-import { customer1 as testCustomer1, customer2 as testCustomer2, customer3 as testCustomer3 } from './test-data';
-import { room1 as testRoom1, room2 as testRoom2, room3 as testRoom3 } from './test-data';
-import { booking1 as testBooking1, booking2 as testBooking2, booking3 as testBooking3, booking4 as testBooking4} from './test-data';
+
+import { 
+  customer1 as testCustomer1, 
+  customer2 as testCustomer2, 
+  customer3 as testCustomer3 
+} from './test-data';
+
+import { 
+  room1 as testRoom1, 
+  room2 as testRoom2, 
+  room3 as testRoom3 
+} from './test-data';
+
+import { 
+  booking1 as testBooking1, 
+  booking2 as testBooking2, 
+  booking3 as testBooking3, 
+  booking4 as testBooking4
+} from './test-data';
 
 
 

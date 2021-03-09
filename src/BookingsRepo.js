@@ -5,7 +5,10 @@ class BookingsRepo {
   }
 
   filterByCustomer(custId) {
-    const bookings = this.bookings.filter(booking => booking.guest.id === custId);
+    const bookings = this.bookings.filter(booking => {
+      return booking.guest.id === custId;
+    });
+
     return new BookingsRepo(bookings);
   }
 
@@ -31,6 +34,6 @@ class BookingsRepo {
     const bookings = this.bookings.filter(booking => booking.date === date);
     return new BookingsRepo(bookings);
   }
-};
+}
 
 export default BookingsRepo;

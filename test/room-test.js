@@ -2,7 +2,12 @@ import chai from 'chai';
 const expect = chai.expect;
 
 import Room from '../src/Room';
-import { room1 as testRoom1, room2 as testRoom2, room3 as testRoom3 } from './test-data';
+
+import { 
+  room1 as testRoom1, 
+  room2 as testRoom2, 
+  room3 as testRoom3 
+} from './test-data';
 
 
 

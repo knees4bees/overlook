@@ -34,7 +34,7 @@ function checkForError(response) {
 }
 
 function displayErrorMessage(err) {
-  const message = '';
+  let message = '';
 
   if (err.message === 'Failed to fetch') {
     message = 'Something went wrong. Please check your internet connection.';
@@ -56,7 +56,8 @@ function createDashboard(values) {
   const rawCustomers = values[1];
   const rawRooms = values[2];
 
-  const allBookings = new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
+  const allBookings = 
+    new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
 
   // TODO change this later so the user is not hard-coded
   const currentUser = new Customer({

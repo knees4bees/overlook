@@ -14,11 +14,6 @@ export const customer3 = {
   name: 'Roger Dodger'
 };
 
-export const customer4 = {
-  id: 4,
-  name: 'Nina Dreama'
-};
-
 
 // ***** Rooms *****
 export const room1 = {

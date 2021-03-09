@@ -8,6 +8,6 @@ class Customer {
     const splitName = this.name.split(' ');
     return splitName[0];
   }
-};
+}
 
 export default Customer;
