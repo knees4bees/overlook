@@ -1,7 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import createBookings from '../src/helpers';
+import { createBookings, createRooms } from '../src/helpers';
 import Customer from '../src/Customer';
 import Room from '../src/Room';
 import Booking from '../src/Booking';
@@ -66,5 +66,35 @@ describe('createBookings', function() {
       createBookings(rawBookingsData, rawCustomersData, rawRoomsData);
     expect(myBookings).to.have.length(4);
     expect(myBookings).to.eql(bookings);
+  });
+});
+
+
+describe('createRooms', function() {
+  let room1, room2, room3;
+  let rooms;
+  let rawRoomsData;
+
+  beforeEach(function() {
+    rawRoomsData = {
+      rooms: [testRoom1, testRoom2, testRoom3]
+    };
+
+    room1 = new Room(testRoom1);
+    room2 = new Room(testRoom2);
+    room3 = new Room(testRoom3);
+
+    rooms = [room1, room2, room3];
+  });
+
+  it('should be a function', function() {
+    expect(createRooms).to.be.a('function');
+  });
+
+  it('should return an array of Room instances', function() {
+    const myRooms = createRooms(rawRoomsData);
+
+    expect(myRooms).to.have.length(3);
+    expect(myRooms).to.eql(rooms);
   });
 });

@@ -27,4 +27,18 @@ function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
   return bookings;
 }
 
-export default createBookings;
+function createRooms(rawRoomsData) {
+  const rooms = [];
+
+  const roomsData = rawRoomsData.rooms;
+
+  roomsData.forEach(roomData => {
+    const room = new Room(roomData);
+    console.log('hellllo');
+    rooms.push(room);
+  });
+
+  return rooms;
+}
+
+export { createBookings, createRooms };
