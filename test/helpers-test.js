@@ -1,7 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import { createBookings, createRooms } from '../src/helpers';
+import { createBookings, createRooms, formatDate } from '../src/helpers';
 import Customer from '../src/Customer';
 import Room from '../src/Room';
 import Booking from '../src/Booking';
@@ -96,5 +96,24 @@ describe('createRooms', function() {
 
     expect(myRooms).to.have.length(3);
     expect(myRooms).to.eql(rooms);
+  });
+});
+
+
+describe('formatDate', function() {
+  it('should be a function', function() {
+    expect(formatDate).to.be.a('function');
+  });
+
+  it('should return an array of Room instances', function() {
+    const rawDate1 = '2020-02-29';
+    const rawDate2 = '2020-12-30';
+    const niceDate1 = '2020/02/29';
+    const niceDate2 = '2020/12/30';
+    const formattedDate1 = formatDate(rawDate1);
+    const formattedDate2 = formatDate(rawDate2);
+
+    expect(formattedDate1).to.equal(niceDate1);
+    expect(formattedDate2).to.equal(niceDate2);
   });
 });

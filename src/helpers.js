@@ -34,11 +34,16 @@ function createRooms(rawRoomsData) {
 
   roomsData.forEach(roomData => {
     const room = new Room(roomData);
-    console.log('hellllo');
     rooms.push(room);
   });
 
   return rooms;
 }
 
-export { createBookings, createRooms };
+function formatDate(date) {
+  const prettyDate = date.replace(/-/g, '\/');
+  return prettyDate;
+}
+
+
+export { createBookings, createRooms, formatDate };
