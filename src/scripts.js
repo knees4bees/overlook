@@ -1,7 +1,6 @@
-import Booking from "./Booking";
 import Customer from "./Customer";
-import Room from "./Room";
 import BookingsRepo from "./BookingsRepo";
+import createBookings from "./helpers";
 
 
 // ***** API calls *****
