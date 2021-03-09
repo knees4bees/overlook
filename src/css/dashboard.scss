@@ -43,5 +43,21 @@ form {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   // grid-template-rows: repeat(2, 1fr);
-  grid-gap: 12px;
+  grid-gap: 15px;
+}
+
+.booking {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+  background-color: white;
+  box-shadow: 0px 0px 7px $accent-dark;
+
+  p {
+    margin: 10px;
+  }
+}
+
+.booking-room-details {
+  text-align: right;
 }

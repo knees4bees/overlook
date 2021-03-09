@@ -69,41 +69,30 @@ function createDashboard(values) {
   renderBookings(userBookings);
 }
 
-// function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
-//   const bookings = [];
-
-//   const bookingsData = rawBookingsData.bookings;
-//   const customersData = rawCustomersData.customers;
-//   const roomsData = rawRoomsData.rooms;
-
-//   bookingsData.forEach(bookingData => {
-//     const foundCustomer = customersData.find(customer => customer.id === bookingData.userID);
-//     const customer = new Customer(foundCustomer);
-
-//     const foundRoom = roomsData.find(room => room.number === bookingData.roomNumber);
-//     const room = new Room(foundRoom);
-
-//     const booking = new Booking(bookingData, customer, room);
-//     bookings.push(booking);
-//   })
-
-//   return bookings;
-// }
-
 function renderUserInfo(customer, userBookings) {
   const firstName = document.querySelector('#greetingName');
   const points = document.querySelector('#points');
 
   firstName.innerText = customer.getFirstName();
   points.innerText = userBookings.calculateTotalPoints(customer.id);
-
 }
 
 function renderBookings(bookingsRepo) {
   const bookingsGrid = document.querySelector('.bookings-container');
 
   bookingsRepo.bookings.forEach(booking => {
-    bookingsGrid.innerHTML += `${booking.id}`;
+    bookingsGrid.innerHTML += `
+      <div class="booking" id="${booking.id}">
+        <div>
+          <p>${booking.date}</p>
+          <p>$${booking.room.costPerNight}</p>
+        </div>
+        <div class="booking-room-details">
+          <p>${booking.room.type}</p>
+          <p>${booking.room.numBeds} ${booking.room.bedSize}</p>
+        </div>
+      </div>`
+    ;
   });
 }
 
