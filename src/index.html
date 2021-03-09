@@ -1,13 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
+    <script src="https://kit.fontawesome.com/c2e749bde5.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overlook</title>
   </head>
   <body>
-    <h1>Overlook</h1>
-
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+    <header>
+      <h1 class="hotel-brand">
+        <i class="logo fab fa-pagelines"></i>
+        <span class="hotel-name">The Overlook</span>
+      </h1>
+      <h2 class="user-info">
+        <span class="greeting">Hi, <span id="greetingName">User</span>!</span>
+        <span class="points"><span id="points">0,000</span> points</span>
+      </h2>
+    </header>
+    <main>
+      <section class="date-input">
+        <form>
+          <input type="date" class="date-selector"/>
+          <input type="submit" class="submit-button" value="See available rooms"/>
+        </form>
+        <p class="apology-message">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
+      </section>
+      <section class="display-bookings">
+        <h3 class="my-bookings">My bookings</h3>
+        <div class="bookings-container"></div>
+      </section>
+    </main>
+    <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
   </body>
 </html>
