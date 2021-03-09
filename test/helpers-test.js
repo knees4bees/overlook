@@ -1,7 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 
-import createBookings from '../src/scripts';
+import createBookings from '../src/helpers';
 import Customer from '../src/Customer';
 import Room from '../src/Room';
 import Booking from '../src/Booking';

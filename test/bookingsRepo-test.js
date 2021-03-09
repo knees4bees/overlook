@@ -68,4 +68,14 @@ describe('BookingsRepo', function() {
     expect(cust2spent).to.equal('358.40');
     expect(cust3spent).to.equal('477.38');
   });
+
+  it('should calculate a customer\'s total points', function() {
+    const cust1points = bookingsRepo.calculateTotalPoints(1);
+    const cust2points = bookingsRepo.calculateTotalPoints(2);
+    const cust3points = bookingsRepo.calculateTotalPoints(3);
+
+    expect(cust1points).to.equal('96852');
+    expect(cust2points).to.equal('35840');
+    expect(cust3points).to.equal('47738');
+  });
 });

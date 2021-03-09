@@ -60,31 +60,44 @@ function createDashboard(values) {
   const allBookings = new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
 
   // TODO change this later so the user is not hard-coded
-  const currentUser = 1;
-  const userBookings = allBookings.filterByCustomer(currentUser);
+  const currentUser = new Customer({
+    id: 1,
+    name: 'Sasha Sosure'
+  });
+  const userBookings = allBookings.filterByCustomer(currentUser.id);
 
+  renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
 }
 
-function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
-  const bookings = [];
+// function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
+//   const bookings = [];
 
-  const bookingsData = rawBookingsData.bookings;
-  const customersData = rawCustomersData.customers;
-  const roomsData = rawRoomsData.rooms;
+//   const bookingsData = rawBookingsData.bookings;
+//   const customersData = rawCustomersData.customers;
+//   const roomsData = rawRoomsData.rooms;
 
-  bookingsData.forEach(bookingData => {
-    const foundCustomer = customersData.find(customer => customer.id === bookingData.userID);
-    const customer = new Customer(foundCustomer);
+//   bookingsData.forEach(bookingData => {
+//     const foundCustomer = customersData.find(customer => customer.id === bookingData.userID);
+//     const customer = new Customer(foundCustomer);
 
-    const foundRoom = roomsData.find(room => room.number === bookingData.roomNumber);
-    const room = new Room(foundRoom);
+//     const foundRoom = roomsData.find(room => room.number === bookingData.roomNumber);
+//     const room = new Room(foundRoom);
 
-    const booking = new Booking(bookingData, customer, room);
-    bookings.push(booking);
-  })
+//     const booking = new Booking(bookingData, customer, room);
+//     bookings.push(booking);
+//   })
 
-  return bookings;
+//   return bookings;
+// }
+
+function renderUserInfo(customer, userBookings) {
+  const firstName = document.querySelector('#greetingName');
+  const points = document.querySelector('#points');
+
+  firstName.innerText = customer.getFirstName();
+  points.innerText = userBookings.calculateTotalPoints(customer.id);
+
 }
 
 function renderBookings(bookingsRepo) {

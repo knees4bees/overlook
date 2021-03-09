@@ -17,7 +17,14 @@ class BookingsRepo {
       sum += costPerNight;
       return sum;
     }, 0);
+
     return total.toFixed(2);
+  }
+
+  calculateTotalPoints(custId) {
+    const dollarAmount = this.calculateTotalSpent(custId);
+    const totalPoints = Math.round(parseFloat(dollarAmount) * 100).toString();
+    return totalPoints;
   }
 };
 
