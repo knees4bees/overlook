@@ -5,8 +5,8 @@ class BookingsRepo {
   }
 
   filterByCustomer(custId) {
-    const filteredBookings = this.bookings.filter(booking => booking.guest.id === custId);
-    return new BookingsRepo(filteredBookings);
+    const bookings = this.bookings.filter(booking => booking.guest.id === custId);
+    return new BookingsRepo(bookings);
   }
 
   calculateTotalSpent(custId) {
@@ -25,6 +25,11 @@ class BookingsRepo {
     const dollarAmount = this.calculateTotalSpent(custId);
     const totalPoints = Math.round(parseFloat(dollarAmount) * 100).toString();
     return totalPoints;
+  }
+
+  filterByDate(date) {
+    const bookings = this.bookings.filter(booking => booking.date === date);
+    return new BookingsRepo(bookings);
   }
 };
 
