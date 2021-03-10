@@ -10,7 +10,6 @@ const dashboard = document.querySelector('.dashboard');
 const dateSearchForm = document.querySelector('.date-search-form');
 const chosenDate = document.querySelector('.date-selector');
 const dateApologyMessage = document.querySelector('#dateApologyMessage');
-const displayBookings = document.querySelector('.display-bookings');
 const bookingsGrid = document.querySelector('.bookings-container');
 const checkboxContainer = document.querySelector('.checkbox-container');
 const checkboxes = document.querySelectorAll('.room-type');

@@ -41,7 +41,7 @@ function createRooms(rawRoomsData) {
 }
 
 function formatDate(date) {
-  const prettyDate = date.replace(/-/g, '\/');
+  const prettyDate = date.replace(/-/g, '/');
   return prettyDate;
 }
 
