@@ -16,6 +16,7 @@ const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
 const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
+const initialFetchErrorMessage = document.querySelector('#initialFetchErrorMessage');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
@@ -24,21 +25,14 @@ let allBookings, allRooms, currentUser, userBookings, desiredDate;
 // ***** API calls *****
 const fetchCustomers = fetch('http://localhost:3001/api/v1/customers')
   .then(checkForError)
-  // TODO wrap displayErrorMessage in function that puts message in the right place (in this case, on the landing display)
-
-    // bigErrorMessage.innerText = message;
-    // show(bigErrorMessage);
-    // hide(formErrorMessage);
-  .catch(err => displayErrorMessage(err));
+  .catch(err => initialFetchErrorMessage.innerText = displayErrorMessage(err));
 
 const fetchRooms = fetch('http://localhost:3001/api/v1/rooms')
   .then(checkForError)
-  // TODO wrap displayErrorMessage in function that puts message in the right place (in this case, on the landing display)
-  .catch(err => displayErrorMessage(err));
+  .catch(err => initialFetchErrorMessage.innerText = displayErrorMessage(err));
 
 const fetchBookings = fetch('http://localhost:3001/api/v1/bookings')
   .then(checkForError)
-  // TODO wrap displayErrorMessage in function that puts message in the right place (in this case, on the landing display)
   .catch(err => displayErrorMessage(err));
 
 

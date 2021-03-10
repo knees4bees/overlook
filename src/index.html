@@ -28,14 +28,15 @@
             <label class="accessible-label" for="searchByDateButton">Search for rooms available on the selected date</label>
             <input type="submit" class="submit-button" id="searchByDateButton" value="See available rooms"/>
           </form>
-          <p class="apology-message" id="dateApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
+          <p class="apology-message hidden" id="dateApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
         </section>
         <section class="display-bookings">
           <h3 class="my-bookings">My bookings</h3>
+          <p class="error-message" id="initialFetchErrorMessage"></p>
           <div class="bookings-container"></div>
         </section>
       </section>
-      <section class="available-rooms">
+      <section class="available-rooms hidden">
         <h3 class="my-rooms">Rooms available for <span id="availableDate"></span></h3>
         <section class="filter-input">
           <form class="filter-search-form">
