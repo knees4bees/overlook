@@ -124,18 +124,21 @@ function renderBookings(bookingsRepo) {
 }
 
 function showAvailableRooms(date) {
-  hide(dashboard);
-  show(availableRooms);
   desiredDate = date;
-
   const availableDate = document.querySelector('#availableDate');
   availableDate.innerText = desiredDate;
   desiredDate = formatDate(desiredDate);
 
   const roomsRepo = allRooms.filterByAvailability(allBookings, desiredDate);
 
-  checkboxes.forEach(checkbox => checkbox.checked = true);
-  renderRooms(roomsRepo);
+  if (roomsRepo.rooms.length === 0) {
+    show(dateApologyMessage);
+  } else {
+    hide(dashboard);
+    show(availableRooms);
+    checkboxes.forEach(checkbox => checkbox.checked = true);
+    renderRooms(roomsRepo);
+  }
 }
 
 function renderRooms(roomsRepo) {
@@ -272,5 +275,5 @@ roomsGrid.addEventListener('click', function(event) {
 })
 
 checkboxContainer.addEventListener('click', function() {
-  showFilteredRooms(desiredDate);
+  showFilteredRooms();
 });
