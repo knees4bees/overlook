@@ -5,6 +5,6 @@ class Booking {
     this.date = bookingData.date;
     this.room = room;
   }
-};
+}
 
 export default Booking;

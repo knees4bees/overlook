@@ -1,0 +1,93 @@
+@import 'variables';
+
+.my-rooms {
+  font-size: 1.5rem;
+}
+
+// ***** filter rooms *****
+.checkbox-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.fa-filter {
+  padding-right: 15px;
+  font-size: 1.5rem;
+}
+
+.filter-type-container {
+  white-space: nowrap;
+}
+
+.room-type-label {
+  padding-left: 4px;
+  padding-right: 15px;
+  font-size: 1.15rem;
+}
+
+.apology-message {
+  color: $accent-dark;
+  font-size: 1rem;
+}
+
+
+// ***** display available rooms *****
+.available-rooms {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.rooms-container {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  // grid-template-rows: repeat(2, 1fr);
+  grid-gap: 15px;
+}
+
+.room {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  min-height: 150px;
+  min-width: 300px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7px $main-medium;
+
+  p {
+    margin: 10px;
+  }
+}
+
+.room-name {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.room-details {
+  font-size: 1rem;
+  text-align: left;
+
+  .fas {
+    padding-right: 5px;
+  }
+}
+
+
+.book-room-button {
+  align-self: center;
+  // margin-top: 15px;
+  margin: 15px;
+  padding: 10px;
+  background-color: $accent-medium;
+  color: white;
+  font-size: 1.15rem;
+  font-weight: bold;
+  border: 0.1rem solid $accent-dark;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7px $accent-dark;
+}

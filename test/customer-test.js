@@ -2,7 +2,11 @@ import chai from 'chai';
 const expect = chai.expect;
 
 import Customer from '../src/Customer';
-import { customer1 as testCustomer1, customer2 as testCustomer2, customer3 as testCustomer3, customer4 as testCustomer4 } from './test-data';
+
+import { 
+  customer1 as testCustomer1, 
+  customer2 as testCustomer2 
+} from './test-data';
 
 
 

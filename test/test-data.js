@@ -14,11 +14,6 @@ export const customer3 = {
   name: 'Roger Dodger'
 };
 
-export const customer4 = {
-  id: 4,
-  name: 'Nina Dreama'
-};
-
 
 // ***** Rooms *****
 export const room1 = {
@@ -46,6 +41,15 @@ export const room3 = {
   bedSize: 'king',
   numBeds: 1,
   costPerNight: 491.14
+};
+
+export const room4 = {
+  number: 4,
+  roomType: 'residential suite',
+  bidet: false,
+  bedSize: 'king',
+  numBeds: 2,
+  costPerNight: 253.1
 };
 
 
@@ -79,5 +83,29 @@ export const booking4 = {
   userID: 1,
   date: '2020/02/16',
   roomNumber: 3,
+  roomServiceCharges: []
+};
+
+export const booking5 = {
+  id: '0test6fwrgu4i7k55hl6t7',
+  userID: 2,
+  date: '2020/02/16',
+  roomNumber: 1,
+  roomServiceCharges: []
+};
+
+export const booking6 = {
+  id: '0test7fwrgu4i7k55hl6t7',
+  userID: 1,
+  date: '2020/02/16',
+  roomNumber: 2,
+  roomServiceCharges: []
+};
+
+export const booking7 = {
+  id: '0test8fwrgu4i7k55hl6t7',
+  userID: 3,
+  date: '2020/02/16',
+  roomNumber: 4,
   roomServiceCharges: []
 };

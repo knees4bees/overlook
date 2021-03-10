@@ -12,6 +12,6 @@ class Room {
     // NB returns a string
     return cost.toFixed(2);
   }
-};
+}
 
 export default Room;

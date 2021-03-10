@@ -10,10 +10,14 @@ function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
   const roomsData = rawRoomsData.rooms;
 
   bookingsData.forEach(bookingData => {
-    const foundCustomer = customersData.find(customer => customer.id === bookingData.userID);
+    const foundCustomer = customersData.find(customer => {
+      return customer.id === bookingData.userID
+    });
     const customer = new Customer(foundCustomer);
 
-    const foundRoom = roomsData.find(room => room.number === bookingData.roomNumber);
+    const foundRoom = roomsData.find(room => {
+      return room.number === bookingData.roomNumber;
+    });
     const room = new Room(foundRoom);
 
     const booking = new Booking(bookingData, customer, room);
@@ -23,4 +27,23 @@ function createBookings(rawBookingsData, rawCustomersData, rawRoomsData) {
   return bookings;
 }
 
-export default createBookings;
+function createRooms(rawRoomsData) {
+  const rooms = [];
+
+  const roomsData = rawRoomsData.rooms;
+
+  roomsData.forEach(roomData => {
+    const room = new Room(roomData);
+    rooms.push(room);
+  });
+
+  return rooms;
+}
+
+function formatDate(date) {
+  const prettyDate = date.replace(/-/g, '/');
+  return prettyDate;
+}
+
+
+export { createBookings, createRooms, formatDate };
