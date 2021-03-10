@@ -12,14 +12,8 @@ const chosenDate = document.querySelector('.date-selector');
 const dateApologyMessage = document.querySelector('#dateApologyMessage');
 const displayBookings = document.querySelector('.display-bookings');
 const bookingsGrid = document.querySelector('.bookings-container');
-const filterSearchForm = document.querySelector('.filter-search-form');
-
 const checkboxContainer = document.querySelector('.checkbox-container');
 const checkboxes = document.querySelectorAll('.room-type');
-const filterSingleRoom = document.querySelector('#singleRoom');
-const filterJuniorSuite = document.querySelector('#juniorSuite');
-const filterSuite = document.querySelector('#suite');
-const filterResidentialSuite = document.querySelector('#residentialSuite');
 const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
@@ -113,7 +107,12 @@ function renderUserInfo(customer, userBookings) {
 }
 
 function renderBookings(bookingsRepo) {
+  hide(dateApologyMessage);
   clear(bookingsGrid);
+
+  if (bookingsRepo.bookings.length === 0) {
+    show(dateApologyMessage);
+  }
 
   bookingsRepo.bookings.forEach(booking => {
     bookingsGrid.innerHTML += `
@@ -145,17 +144,17 @@ function showAvailableRooms(date) {
   renderRooms(rooms);
 }
 
-function renderRooms(rooms) {
+function renderRooms(roomsRepo) {
   hide(filterApologyMessage);
   clear(roomsGrid);
 
-  if (rooms.rooms.length === 0) {
+  if (roomsRepo.rooms.length === 0) {
     show(filterApologyMessage);
   }
 
   let bidet = '';
 
-  rooms.rooms.forEach(room => {
+  roomsRepo.rooms.forEach(room => {
     if (room.bidet) {
       bidet = '<i class="fas fa-toilet"></i> bidet';
     } else {
