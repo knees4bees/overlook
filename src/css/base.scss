@@ -4,6 +4,7 @@
 @import 'rooms';
 
 body {
+  margin: 0;
   background: $light;
   font-family: $body-font;
 }
@@ -35,6 +36,22 @@ main {
 }
 
 @media screen and (max-width: 850px) {
+  .logo {
+    font-size: 2rem;
+  }
+
+  .hotel-name {
+    font-size: 2rem;
+  }
+
+  .user-info {
+    font-size: 1.25rem;
+
+    .points {
+      padding-left: 5px;
+    }
+  }
+
   .rooms-container {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -43,6 +60,17 @@ main {
 @media screen and (max-width: 700px) {
   .bookings-container {
     grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .greeting,
+  .points {
+    display: none;
+  }
+
+  .fa-user {
+    display: inline;
   }
 }
 
