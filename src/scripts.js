@@ -19,7 +19,7 @@ const roomsGrid = document.querySelector('.rooms-container');
 const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
 
 
-let allBookings, allRooms, currentUser, userBookings;
+let allBookings, allRooms, currentUser, userBookings, desiredDate;
 
 
 // ***** API calls *****
@@ -94,6 +94,7 @@ function createDashboard(values) {
 function renderLanding(currentUser, userBookings) {
   show(dashboard);
   hide(availableRooms);
+  desiredDate = null;
   renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
 }
@@ -133,18 +134,19 @@ function renderBookings(bookingsRepo) {
 function showAvailableRooms(date) {
   hide(dashboard);
   show(availableRooms);
+  desiredDate = date;
 
   const availableDate = document.querySelector('#availableDate');
-  availableDate.innerText = date;
-  date = formatDate(date);
+  availableDate.innerText = desiredDate;
+  desiredDate = formatDate(desiredDate);
 
-  const rooms = allRooms.filterByAvailability(allBookings, date);
+  const roomsRepo = allRooms.filterByAvailability(allBookings, desiredDate);
 
   checkboxes.forEach(checkbox => checkbox.checked = true);
-  renderRooms(rooms, date);
+  renderRooms(roomsRepo);
 }
 
-function renderRooms(roomsRepo, desiredDate) {
+function renderRooms(roomsRepo) {
   hide(filterApologyMessage);
   clear(roomsGrid);
   clear(bookRoomFetchErrorMessage);
@@ -180,6 +182,7 @@ function renderRooms(roomsRepo, desiredDate) {
   });
 }
 
+// TODO pass in date here
 function showFilteredRooms() {
   const types = getRoomTypes();
   const rooms = getRooms(types);
@@ -218,17 +221,18 @@ function bookRoom(targetId) {
 
   // split targetId into two pieces, one for roomNumber and other for date
   console.log("targetId: ", targetId);
-  const roomNumber = targetId.split('-')[0];
-  console.log("roomNumber: ", roomNumber);
-  const desiredDate = targetId.split('-')[1];
-  console.log("desiredDate: ", desiredDate);
+  const roomNumberComponent = targetId.split('-')[0];
+  console.log("roomNumberComponent: ", roomNumberComponent);
+  const dateComponent = targetId.split('-')[1];
+  console.log("desiredDateComponent: ", dateComponent);
 
   // TODO figure out why this format isn't working
   // ... but first use this opportunity to handle 422s gracefully!
   const room = {
     "userID": currentUser.id,
-    "date": desiredDate,
-    "roomNumber": roomNumber
+    // TODO change this later to use just desiredDate -- and can clean up targetId accordingly
+    "date": dateComponent,
+    "roomNumber": parseInt(roomNumberComponent)
   };
   console.log("room: ", room);
 
@@ -277,4 +281,6 @@ roomsGrid.addEventListener('click', function(event) {
   bookRoom(event.target.id);
 })
 
-checkboxContainer.addEventListener('click', showFilteredRooms);
+checkboxContainer.addEventListener('click', function() {
+  showFilteredRooms(desiredDate);
+});
