@@ -5,6 +5,10 @@
 }
 
 // ***** filter rooms *****
+.filter-search-form {
+  margin-bottom: 30px;
+}
+
 .checkbox-container {
   display: flex;
   flex-flow: row wrap;
@@ -26,8 +30,15 @@
 }
 
 .apology-message {
+  margin-bottom: 0;
   color: $accent-dark;
-  font-size: 1rem;
+  font-size: 1.25rem;
+}
+
+.error-message {
+  margin-bottom: 0;
+  color: $accent-dark;
+  font-size: 1.25rem;
 }
 
 
@@ -39,7 +50,7 @@
 }
 
 .rooms-container {
-  margin-top: 40px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   // grid-template-rows: repeat(2, 1fr);
@@ -52,10 +63,11 @@
   justify-content: space-between;
   padding: 5px;
   min-height: 150px;
-  min-width: 300px;
+  min-width: 350px;
   background-color: white;
   border-radius: 5px;
-  box-shadow: 0px 0px 7px $main-medium;
+  @include drop-shadow($main-medium);
+  // box-shadow: 0px 0px 7px $main-medium;
 
   p {
     margin: 10px;
@@ -77,7 +89,6 @@
   }
 }
 
-
 .book-room-button {
   align-self: center;
   // margin-top: 15px;
@@ -89,5 +100,14 @@
   font-weight: bold;
   border: 0.1rem solid $accent-dark;
   border-radius: 5px;
-  box-shadow: 0px 0px 7px $accent-dark;
+  @include drop-shadow($accent-dark);
+  // box-shadow: 0px 0px 7px $accent-dark;
+}
+
+.confirmation-message {
+  align-self: center;
+  text-align: right;
+  width: 180px;
+  color: $accent-dark;
+  font-size: 1rem;
 }

@@ -4,7 +4,6 @@ import RoomsRepo from "./RoomsRepo";
 import { createBookings, createRooms, formatDate } from "./helpers";
 
 // ***** Query selectors *****
-// const searchByDateButton = document.querySelector('#searchByDateButton');
 const nameAndLogo = document.querySelector('.hotel-brand');
 const dashboard = document.querySelector('.dashboard');
 const dateSearchForm = document.querySelector('.date-search-form');
@@ -16,20 +15,21 @@ const checkboxes = document.querySelectorAll('.room-type');
 const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
+const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
+const initialFetchErrorMessage = document.querySelector('#initialFetchErrorMessage');
 
 
-let allBookings, allRooms, currentUser, userBookings;
+let allBookings, allRooms, currentUser, userBookings, desiredDate;
 
 
 // ***** API calls *****
-// TODO move these to a separate file later?
 const fetchCustomers = fetch('http://localhost:3001/api/v1/customers')
   .then(checkForError)
-  .catch(err => displayErrorMessage(err));
+  .catch(err => initialFetchErrorMessage.innerText = displayErrorMessage(err));
 
 const fetchRooms = fetch('http://localhost:3001/api/v1/rooms')
   .then(checkForError)
-  .catch(err => displayErrorMessage(err));
+  .catch(err => initialFetchErrorMessage.innerText = displayErrorMessage(err));
 
 const fetchBookings = fetch('http://localhost:3001/api/v1/bookings')
   .then(checkForError)
@@ -44,8 +44,7 @@ function loadData() {
 
 function checkForError(response) {
   if (!response.ok) {
-    // TODO tweak error message to make it actually helpful
-    throw new Error('There has been an error.');
+    throw new Error('Something went wrong with your request. Please contact the site administrator for assistance.');
   } else {
     return response.json();
   }
@@ -56,17 +55,11 @@ function displayErrorMessage(err) {
 
   if (err.message === 'Failed to fetch') {
     message = 'Something went wrong. Please check your internet connection.';
-    // TODO tweak this to use query selector and show things in the right place
-    // bigErrorMessage.innerText = message;
-    // show(bigErrorMessage);
-    // hide(formErrorMessage);
   } else {
     message = err.message;
-    // TODO tweak this to use query selector and show things in the right place
-    // formErrorMessage.innerText = message;
-    // show(formErrorMessage);
-    // hide(bigErrorMessage);
   }
+
+  return message;
 }
 
 function createDashboard(values) {
@@ -93,6 +86,7 @@ function createDashboard(values) {
 function renderLanding(currentUser, userBookings) {
   show(dashboard);
   hide(availableRooms);
+  desiredDate = null;
   renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
 }
@@ -130,22 +124,27 @@ function renderBookings(bookingsRepo) {
 }
 
 function showAvailableRooms(date) {
-  hide(dashboard);
-  show(availableRooms);
-
+  desiredDate = date;
   const availableDate = document.querySelector('#availableDate');
-  availableDate.innerText = date;
-  date = formatDate(date);
+  availableDate.innerText = desiredDate;
+  desiredDate = formatDate(desiredDate);
 
-  const rooms = allRooms.filterByAvailability(allBookings, date);
+  const roomsRepo = allRooms.filterByAvailability(allBookings, desiredDate);
 
-  checkboxes.forEach(checkbox => checkbox.checked = true);
-  renderRooms(rooms);
+  if (roomsRepo.rooms.length === 0) {
+    show(dateApologyMessage);
+  } else {
+    hide(dashboard);
+    show(availableRooms);
+    checkboxes.forEach(checkbox => checkbox.checked = true);
+    renderRooms(roomsRepo);
+  }
 }
 
 function renderRooms(roomsRepo) {
   hide(filterApologyMessage);
   clear(roomsGrid);
+  clear(bookRoomFetchErrorMessage);
 
   if (roomsRepo.rooms.length === 0) {
     show(filterApologyMessage);
@@ -161,7 +160,7 @@ function renderRooms(roomsRepo) {
     }
 
     roomsGrid.innerHTML += `
-      <div class="room" id="${room.number}">
+      <div class="room">
         <div class=room-info">
           <p class="room-name">Room ${room.number}</p>
           <div class="room-details">
@@ -171,7 +170,11 @@ function renderRooms(roomsRepo) {
           </div>
         </div>
         <div class="reserve-room">
-          <div class="book-room-button">book room</div>
+          <div class="book-room-button" id="${room.number}-${desiredDate}">book room</div>
+          <div class="hidden confirmation-container" id="confirmation-for-${room.number}-${desiredDate}">
+            <p class="confirmation-message">You're booked!</p>
+            <p class="confirmation-message">Confirmation number <span id="confirmation-number-for-${room.number}-${desiredDate}"></span></p>
+          </div>
         </div>
       </div>`
     ;
@@ -209,6 +212,39 @@ function getRooms(types) {
   return result;
 }
 
+function bookRoom(targetId) {
+  const roomNumberComponent = targetId.split('-')[0];
+  const dateComponent = targetId.split('-')[1];
+
+  const room = {
+    "userID": currentUser.id,
+    "date": dateComponent,
+    "roomNumber": parseInt(roomNumberComponent)
+  };
+
+  fetch('http://localhost:3001/api/v1/bookings', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(room),
+  })
+    .then(checkForError)
+    .then(data => updateRoom(data.newBooking.id, targetId))
+    .catch(err => bookRoomFetchErrorMessage.innerText = displayErrorMessage(err));
+}
+
+function updateRoom(newBookingId, targetId) {
+  const targetButton = document.getElementById(targetId);
+  const confirmationId = 'confirmation-for-' + targetId;
+  const confirmationNumberId = 'confirmation-number-for-' + targetId;
+  const confirmationContainer = document.getElementById(confirmationId);
+  const confirmationNumber = document.getElementById(confirmationNumberId);
+  confirmationNumber.innerText = newBookingId;
+  hide(targetButton);
+  show(confirmationContainer);
+}
+
 function clear(HTMLelement) {
   HTMLelement.innerHTML = '';
 }
@@ -234,4 +270,10 @@ dateSearchForm.addEventListener('submit', function(event) {
   showAvailableRooms(chosenDate.value);
 });
 
-checkboxContainer.addEventListener('click', showFilteredRooms);
+roomsGrid.addEventListener('click', function(event) {
+  bookRoom(event.target.id);
+})
+
+checkboxContainer.addEventListener('click', function() {
+  showFilteredRooms();
+});

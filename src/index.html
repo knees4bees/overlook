@@ -5,8 +5,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overlook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
     <header>
@@ -17,6 +17,7 @@
       <h2 class="user-info">
         <span class="greeting">Hi, <span id="greetingName">User</span>!</span>
         <span class="points"><span id="points">0,000</span> points</span>
+        <i class="fas fa-user hidden"></i>
       </h2>
     </header>
     <main>
@@ -28,14 +29,15 @@
             <label class="accessible-label" for="searchByDateButton">Search for rooms available on the selected date</label>
             <input type="submit" class="submit-button" id="searchByDateButton" value="See available rooms"/>
           </form>
-          <p class="apology-message" id="dateApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
+          <p class="apology-message hidden" id="dateApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
         </section>
         <section class="display-bookings">
           <h3 class="my-bookings">My bookings</h3>
+          <p class="error-message" id="initialFetchErrorMessage"></p>
           <div class="bookings-container"></div>
         </section>
       </section>
-      <section class="available-rooms">
+      <section class="available-rooms hidden">
         <h3 class="my-rooms">Rooms available for <span id="availableDate"></span></h3>
         <section class="filter-input">
           <form class="filter-search-form">
@@ -63,6 +65,7 @@
             <!-- </section> -->
           </form>
           <p class="apology-message" id="filterApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms of that type available. Please try selecting a different room type.</p>
+          <p class="error-message" id="bookRoomErrorMessage"></p>
         </section>
         <div class="rooms-container"></div>
       </section>
