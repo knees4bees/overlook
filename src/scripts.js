@@ -4,7 +4,6 @@ import RoomsRepo from "./RoomsRepo";
 import { createBookings, createRooms, formatDate } from "./helpers";
 
 // ***** Query selectors *****
-// const searchByDateButton = document.querySelector('#searchByDateButton');
 const nameAndLogo = document.querySelector('.hotel-brand');
 const dashboard = document.querySelector('.dashboard');
 const dateSearchForm = document.querySelector('.date-search-form');
@@ -17,14 +16,12 @@ const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
 const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
-// const confirmationContainer = document.querySelector('.confirmation-container');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
 
 
 // ***** API calls *****
-// TODO move these to a separate file later?
 const fetchCustomers = fetch('http://localhost:3001/api/v1/customers')
   .then(checkForError)
   // TODO wrap displayErrorMessage in function that puts message in the right place (in this case, on the landing display)
@@ -67,7 +64,7 @@ function displayErrorMessage(err) {
   } else {
     message = err.message;
   }
-  console.log("message in displayErrorMessage: ", message);
+
   return message;
 }
 
@@ -187,7 +184,6 @@ function renderRooms(roomsRepo) {
   });
 }
 
-// TODO pass in date here
 function showFilteredRooms() {
   const types = getRoomTypes();
   const rooms = getRooms(types);
@@ -220,24 +216,14 @@ function getRooms(types) {
 }
 
 function bookRoom(targetId) {
-  // TODO first convert roomNumber into var room holding data object of required format
-    // required format for POST request
-    // { "userID": 48, "date": "2019/09/23", "roomNumber": 4 }
-
-  // split targetId into two pieces, one for roomNumber and other for date
-  console.log("targetId: ", targetId);
   const roomNumberComponent = targetId.split('-')[0];
-  console.log("roomNumberComponent: ", roomNumberComponent);
   const dateComponent = targetId.split('-')[1];
-  console.log("desiredDateComponent: ", dateComponent);
 
   const room = {
     "userID": currentUser.id,
     "date": dateComponent,
     "roomNumber": parseInt(roomNumberComponent)
   };
-  console.log("room: ", room);
-
 
   fetch('http://localhost:3001/api/v1/bookings', {
     method: 'POST',
@@ -247,13 +233,7 @@ function bookRoom(targetId) {
     body: JSON.stringify(room),
   })
     .then(checkForError)
-    // TODO move returned data into whatever function needs it (render, etc.)
-    .then(data => {
-      console.log("new id thing: ", data.newBooking.id);
-      console.log("targetId inside .then: ", targetId);
-      updateRoom(data.newBooking.id, targetId);
-      console.log("here's the data: ", data);
-    })
+    .then(data => updateRoom(data.newBooking.id, targetId))
     .catch(err => bookRoomFetchErrorMessage.innerText = displayErrorMessage(err));
 }
 
@@ -261,14 +241,11 @@ function updateRoom(newBookingId, targetId) {
   const targetButton = document.getElementById(targetId);
   const confirmationId = 'confirmation-for-' + targetId;
   const confirmationNumberId = 'confirmation-number-for-' + targetId;
-  // console.log("confirmationId: ", confirmationId);
   const confirmationContainer = document.getElementById(confirmationId);
   const confirmationNumber = document.getElementById(confirmationNumberId);
   confirmationNumber.innerText = newBookingId;
-  // console.log(confirmationContainer);
   hide(targetButton);
   show(confirmationContainer);
-  // console.log(targetButton);
 }
 
 function clear(HTMLelement) {
@@ -297,7 +274,6 @@ dateSearchForm.addEventListener('submit', function(event) {
 });
 
 roomsGrid.addEventListener('click', function(event) {
-  console.log("hi, here's the target id: ", event.target.id);
   bookRoom(event.target.id);
 })
 
