@@ -4,8 +4,17 @@ $primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,1
 @import 'variables';
 @import 'header';
 @import 'dashboard';
+@import 'rooms';
 
 body {
   background: $light;
   font-family: $body-font;
+}
+
+main {
+  padding: 30px 50px;
+}
+
+.hidden {
+  display: none;
 }

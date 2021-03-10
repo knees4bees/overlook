@@ -1,6 +1,23 @@
 import Customer from "./Customer";
 import BookingsRepo from "./BookingsRepo";
-import createBookings from "./helpers";
+import RoomsRepo from "./RoomsRepo";
+import { createBookings, createRooms, formatDate } from "./helpers";
+
+// ***** Query selectors *****
+// const searchByDateButton = document.querySelector('#searchByDateButton');
+const dashboard = document.querySelector('.dashboard');
+const dateInput = document.querySelector('.date-input');
+const dateSearchForm = document.querySelector('.date-search-form');
+const dateApologyMessage = document.querySelector('#dateApologyMessage');
+const displayBookings = document.querySelector('.display-bookings');
+const bookingsGrid = document.querySelector('.bookings-container');
+const filterSearchForm = document.querySelector('.filter-search-form');
+const filterApologyMessage = document.querySelector('#filterApologyMessage');
+const availableRooms = document.querySelector('.available-rooms');
+const roomsGrid = document.querySelector('.rooms-container');
+
+
+let allBookings, allRooms;
 
 
 // ***** API calls *****
@@ -56,8 +73,10 @@ function createDashboard(values) {
   const rawCustomers = values[1];
   const rawRooms = values[2];
 
-  const allBookings = 
+  allBookings = 
     new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
+
+  allRooms = new RoomsRepo(createRooms(rawRooms));
 
   // TODO change this later so the user is not hard-coded
   const currentUser = new Customer({
@@ -66,6 +85,12 @@ function createDashboard(values) {
   });
   const userBookings = allBookings.filterByCustomer(currentUser.id);
 
+  renderLanding(currentUser, userBookings);
+}
+
+function renderLanding(currentUser, userBookings) {
+  show(dashboard);
+  hide(availableRooms);
   renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
 }
@@ -79,13 +104,13 @@ function renderUserInfo(customer, userBookings) {
 }
 
 function renderBookings(bookingsRepo) {
-  const bookingsGrid = document.querySelector('.bookings-container');
+  clear(bookingsGrid);
 
   bookingsRepo.bookings.forEach(booking => {
     bookingsGrid.innerHTML += `
       <div class="booking" id="${booking.id}">
         <div>
-          <p>${booking.date}</p>
+          <p class="booking-date">${booking.date}</p>
           <p>$${booking.room.costPerNight}</p>
         </div>
         <div class="booking-room-details">
@@ -97,7 +122,75 @@ function renderBookings(bookingsRepo) {
   });
 }
 
+function showAvailableRooms(date) {
+  hide(dashboard);
+  show(availableRooms);
+
+  const availableDate = document.querySelector('#availableDate');
+  availableDate.innerText = date;
+  // console.log("date in findAvailableRooms: ", date);
+  // console.log("raw date: ", date);
+  date = formatDate(date);
+  // console.log("formatted date: ", date);
+  // console.log('all bookings: ', allBookings);
+  // console.log('all rooms: ', allRooms);
+  const rooms = allRooms.filterByAvailability(allBookings, date);
+  console.log(rooms);
+  renderRooms(rooms);
+}
+
+function renderRooms(rooms) {
+  clear(roomsGrid);
+
+  let bidet = '';
+
+  rooms.rooms.forEach(room => {
+    if (room.bidet) {
+      bidet = '<i class="fas fa-toilet"></i> bidet';
+    } else {
+      bidet = '';
+    }
+
+    roomsGrid.innerHTML += `
+      <div class="room" id="${room.number}">
+        <div class=room-info">
+          <p class="room-name">Room ${room.number}</p>
+          <div class="room-details">
+            <p>${room.type}</p>
+            <p> <i class="fas fa-bed"></i> ${room.numBeds} ${room.bedSize}</p>
+            <p> ${bidet}</p>
+          </div>
+        </div>
+        <div class="reserve-room">
+          <div class="book-room-button">book room</div>
+        </div>
+      </div>`
+    ;
+  });
+}
+
+function clear(HTMLelement) {
+  HTMLelement.innerHTML = '';
+}
+
+function hide(element) {
+  element.classList.add('hidden');
+}
+
+function show(element) {
+  element.classList.remove('hidden');
+}
+
+
 // ***** Event listeners *****
 window.addEventListener('load', loadData);
 
-export default createBookings;
+dateSearchForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  const date = document.querySelector('.date-selector').value;
+  // console.log("date in event listener: ", date);
+  // console.log("type of date in event listener: ", typeof(date));
+  showAvailableRooms(date);
+});
+
+// export default createBookings;

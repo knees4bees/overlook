@@ -1,8 +1,8 @@
 @import 'variables';
 
-main {
-  padding: 30px 50px;
-}
+// main {
+//   padding: 30px 50px;
+// }
 
 // ***** date search *****
 form {
@@ -47,15 +47,22 @@ form {
 }
 
 .booking {
+  margin: 0;
   display: flex;
   justify-content: space-between;
-  padding: 0 8px;
+  padding: 5px;
   background-color: white;
-  box-shadow: 0px 0px 7px $accent-dark;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7px $main-medium;
 
   p {
     margin: 10px;
   }
+}
+
+.booking-date {
+  font-size: 1.25rem;
+  font-weight: bold;
 }
 
 .booking-room-details {

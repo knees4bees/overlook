@@ -20,16 +20,45 @@
       </h2>
     </header>
     <main>
-      <section class="date-input">
-        <form>
-          <input type="date" class="date-selector"/>
-          <input type="submit" class="submit-button" value="See available rooms"/>
-        </form>
-        <p class="apology-message">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
+      <section class="dashboard">
+        <section class="date-input">
+          <form class="date-search-form">
+            <input type="date" class="date-selector" required/>
+            <input type="submit" class="submit-button" id="searchByDateButton" value="See available rooms"/>
+          </form>
+          <p class="apology-message" id="dateApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms available on that day. Please try selecting a different date.</p>
+        </section>
+        <section class="display-bookings">
+          <h3 class="my-bookings">My bookings</h3>
+          <div class="bookings-container"></div>
+        </section>
       </section>
-      <section class="display-bookings">
-        <h3 class="my-bookings">My bookings</h3>
-        <div class="bookings-container"></div>
+      <section class="available-rooms">
+        <h3 class="my-rooms">Rooms available for <span id="availableDate"></span></h3>
+        <section class="filter-input">
+          <form class="filter-search-form">
+            <i class="fas fa-filter"></i>
+            <div>
+              <input type="checkbox" class="room-type" id="singleRoom" name="single-room" value="single room"/>
+              <label class="room-type-label" id="singleRoomLabel" for="singleRoom">Single room</label>
+            </div>
+            <div>
+              <input type="checkbox" class="room-type" id="juniorSuite" name="junior suite" value="junior suite"/>
+              <label class="room-type-label" id="singleRoomLabel" for="juniorSuite">Junior suite</label>
+            </div>
+            <div>
+              <input type="checkbox" class="room-type" id="suite" name="suite" value="suite"/>
+              <label class="room-type-label" id="singleRoomLabel" for="suite">Suite</label>
+            </div>
+            <div>
+              <input type="checkbox" class="room-type" id="residentialSuite" name="residential-suite" value="residential suite"/>
+              <label class="room-type-label" id="singleRoomLabel" for="residentialSuite">Residential suite</label>
+            </div>
+            <input type="submit" class="submit-button" id="filterByTypeButton" value="See rooms of this type"/>
+          </form>
+          <p class="apology-message" id="filterApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms of that type available. Please try selecting a different room type.</p>
+        </section>
+        <div class="rooms-container"></div>
       </section>
     </main>
     <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
