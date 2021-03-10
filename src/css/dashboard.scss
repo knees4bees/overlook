@@ -12,6 +12,12 @@ form {
   // margin: 30px 20px 20px 50px;
 }
 
+.accessible-label {
+  position: absolute; 
+  top:-1000px; 
+  left:-1000px;
+}
+
 .date-selector {
   margin-right: 25px;
   padding: 5px;
