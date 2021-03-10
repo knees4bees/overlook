@@ -5,6 +5,7 @@ import { createBookings, createRooms, formatDate } from "./helpers";
 
 // ***** Query selectors *****
 // const searchByDateButton = document.querySelector('#searchByDateButton');
+const nameAndLogo = document.querySelector('.hotel-brand');
 const dashboard = document.querySelector('.dashboard');
 const dateInput = document.querySelector('.date-input');
 const dateSearchForm = document.querySelector('.date-search-form');
@@ -17,7 +18,7 @@ const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
 
 
-let allBookings, allRooms;
+let allBookings, allRooms, currentUser, userBookings;
 
 
 // ***** API calls *****
@@ -79,11 +80,12 @@ function createDashboard(values) {
   allRooms = new RoomsRepo(createRooms(rawRooms));
 
   // TODO change this later so the user is not hard-coded
-  const currentUser = new Customer({
+  currentUser = new Customer({
     id: 1,
     name: 'Sasha Sosure'
   });
-  const userBookings = allBookings.filterByCustomer(currentUser.id);
+
+  userBookings = allBookings.filterByCustomer(currentUser.id);
 
   renderLanding(currentUser, userBookings);
 }
@@ -193,4 +195,6 @@ dateSearchForm.addEventListener('submit', function(event) {
   showAvailableRooms(date);
 });
 
-// export default createBookings;
+nameAndLogo.addEventListener('click', function() {
+  renderLanding(currentUser, userBookings);
+});
