@@ -26,6 +26,13 @@
 }
 
 .apology-message {
+  margin-bottom: 0;
+  color: $accent-dark;
+  font-size: 1rem;
+}
+
+.error-message {
+  margin-bottom: 0;
   color: $accent-dark;
   font-size: 1rem;
 }
