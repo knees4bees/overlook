@@ -17,6 +17,7 @@ const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
 const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
+// const confirmationContainer = document.querySelector('.confirmation-container');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
@@ -176,6 +177,10 @@ function renderRooms(roomsRepo) {
         </div>
         <div class="reserve-room">
           <div class="book-room-button" id="${room.number}-${desiredDate}">book room</div>
+          <div class="hidden confirmation-container" id="confirmation-for-${room.number}-${desiredDate}">
+            <p class="confirmation-message">You're booked!</p>
+            <p class="confirmation-message">Confirmation number <span id="confirmation-number-for-${room.number}-${desiredDate}"></span></p>
+          </div>
         </div>
       </div>`
     ;
@@ -226,11 +231,8 @@ function bookRoom(targetId) {
   const dateComponent = targetId.split('-')[1];
   console.log("desiredDateComponent: ", dateComponent);
 
-  // TODO figure out why this format isn't working
-  // ... but first use this opportunity to handle 422s gracefully!
   const room = {
     "userID": currentUser.id,
-    // TODO change this later to use just desiredDate -- and can clean up targetId accordingly
     "date": dateComponent,
     "roomNumber": parseInt(roomNumberComponent)
   };
@@ -246,9 +248,27 @@ function bookRoom(targetId) {
   })
     .then(checkForError)
     // TODO move returned data into whatever function needs it (render, etc.)
-    .then(data => console.log("here's the data: ", data))
-
+    .then(data => {
+      console.log("new id thing: ", data.newBooking.id);
+      console.log("targetId inside .then: ", targetId);
+      updateRoom(data.newBooking.id, targetId);
+      console.log("here's the data: ", data);
+    })
     .catch(err => bookRoomFetchErrorMessage.innerText = displayErrorMessage(err));
+}
+
+function updateRoom(newBookingId, targetId) {
+  const targetButton = document.getElementById(targetId);
+  const confirmationId = 'confirmation-for-' + targetId;
+  const confirmationNumberId = 'confirmation-number-for-' + targetId;
+  // console.log("confirmationId: ", confirmationId);
+  const confirmationContainer = document.getElementById(confirmationId);
+  const confirmationNumber = document.getElementById(confirmationNumberId);
+  confirmationNumber.innerText = newBookingId;
+  // console.log(confirmationContainer);
+  hide(targetButton);
+  show(confirmationContainer);
+  // console.log(targetButton);
 }
 
 function clear(HTMLelement) {
