@@ -7,12 +7,19 @@ import { createBookings, createRooms, formatDate } from "./helpers";
 // const searchByDateButton = document.querySelector('#searchByDateButton');
 const nameAndLogo = document.querySelector('.hotel-brand');
 const dashboard = document.querySelector('.dashboard');
-const dateInput = document.querySelector('.date-input');
 const dateSearchForm = document.querySelector('.date-search-form');
+const chosenDate = document.querySelector('.date-selector');
 const dateApologyMessage = document.querySelector('#dateApologyMessage');
 const displayBookings = document.querySelector('.display-bookings');
 const bookingsGrid = document.querySelector('.bookings-container');
 const filterSearchForm = document.querySelector('.filter-search-form');
+
+const checkboxContainer = document.querySelector('.checkbox-container');
+const checkboxes = document.querySelectorAll('.room-type');
+const filterSingleRoom = document.querySelector('#singleRoom');
+const filterJuniorSuite = document.querySelector('#juniorSuite');
+const filterSuite = document.querySelector('#suite');
+const filterResidentialSuite = document.querySelector('#residentialSuite');
 const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
@@ -130,19 +137,21 @@ function showAvailableRooms(date) {
 
   const availableDate = document.querySelector('#availableDate');
   availableDate.innerText = date;
-  // console.log("date in findAvailableRooms: ", date);
-  // console.log("raw date: ", date);
   date = formatDate(date);
-  // console.log("formatted date: ", date);
-  // console.log('all bookings: ', allBookings);
-  // console.log('all rooms: ', allRooms);
+
   const rooms = allRooms.filterByAvailability(allBookings, date);
-  console.log(rooms);
+
+  checkboxes.forEach(checkbox => checkbox.checked = true);
   renderRooms(rooms);
 }
 
 function renderRooms(rooms) {
+  hide(filterApologyMessage);
   clear(roomsGrid);
+
+  if (rooms.rooms.length === 0) {
+    show(filterApologyMessage);
+  }
 
   let bidet = '';
 
@@ -171,6 +180,37 @@ function renderRooms(rooms) {
   });
 }
 
+function showFilteredRooms() {
+  const types = getRoomTypes();
+  const rooms = getRooms(types);
+  renderRooms(rooms);
+}
+
+function getRoomTypes() {
+  const types = [];
+
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      types.push(checkbox.value);
+    }
+  });
+
+  return types;
+}
+
+function getRooms(types) {
+  let rooms = [];
+
+  types.forEach(type => {
+    const roomsOfThisType = allRooms.filterByType(type).rooms;
+    rooms = [...rooms, ...roomsOfThisType];
+  });
+
+  const result = new RoomsRepo(rooms);
+
+  return result;
+}
+
 function clear(HTMLelement) {
   HTMLelement.innerHTML = '';
 }
@@ -187,14 +227,13 @@ function show(element) {
 // ***** Event listeners *****
 window.addEventListener('load', loadData);
 
-dateSearchForm.addEventListener('submit', function(event) {
-  event.preventDefault();
-  const date = document.querySelector('.date-selector').value;
-  // console.log("date in event listener: ", date);
-  // console.log("type of date in event listener: ", typeof(date));
-  showAvailableRooms(date);
-});
-
 nameAndLogo.addEventListener('click', function() {
   renderLanding(currentUser, userBookings);
 });
+
+dateSearchForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  showAvailableRooms(chosenDate.value);
+});
+
+checkboxContainer.addEventListener('click', showFilteredRooms);
