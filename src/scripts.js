@@ -15,8 +15,10 @@ const checkboxes = document.querySelectorAll('.room-type');
 const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
-const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
-const initialFetchErrorMessage = document.querySelector('#initialFetchErrorMessage');
+const bookRoomFetchErrorMessage = 
+  document.querySelector('#bookRoomErrorMessage');
+const initialFetchErrorMessage = 
+  document.querySelector('#initialFetchErrorMessage');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
@@ -44,7 +46,10 @@ function loadData() {
 
 function checkForError(response) {
   if (!response.ok) {
-    throw new Error('Something went wrong with your request. Please contact the site administrator for assistance.');
+    throw new Error(
+      'Something went wrong with your request. \
+      Please contact the site administrator for assistance.'
+    );
   } else {
     return response.json();
   }
@@ -170,10 +175,19 @@ function renderRooms(roomsRepo) {
           </div>
         </div>
         <div class="reserve-room">
-          <button class="book-room-button" id="${room.number}-${desiredDate}">book room</button>
-          <div class="hidden confirmation-container" id="confirmation-for-${room.number}-${desiredDate}">
+          <button class="book-room-button" id="${room.number}-${desiredDate}">
+            book room
+          </button>
+          <div class="hidden confirmation-container" 
+            id="confirmation-for-${room.number}-${desiredDate}"
+          >
             <p class="confirmation-message">You're booked!</p>
-            <p class="confirmation-message">Confirmation number <span id="confirmation-number-for-${room.number}-${desiredDate}"></span></p>
+            <p class="confirmation-message">
+              Confirmation number 
+              <span 
+                id="confirmation-number-for-${room.number}-${desiredDate}"
+              ></span>
+            </p>
           </div>
         </div>
       </div>`
@@ -231,7 +245,9 @@ function bookRoom(targetId) {
   })
     .then(checkForError)
     .then(data => updateRoom(data.newBooking.id, targetId))
-    .catch(err => bookRoomFetchErrorMessage.innerText = displayErrorMessage(err));
+    .catch(err => {
+      bookRoomFetchErrorMessage.innerText = displayErrorMessage(err)
+    });
 }
 
 function updateRoom(newBookingId, targetId) {
