@@ -21,7 +21,7 @@
       </h2>
     </header>
     <main>
-      <section class="dashboard">
+      <section class="dashboard hidden">
         <section class="date-input">
           <form class="date-search-form">
             <label class="accessible-label" for="dateSelector">Select a check-in date</label>
@@ -68,6 +68,20 @@
           <p class="error-message" id="bookRoomErrorMessage"></p>
         </section>
         <div class="rooms-container"></div>
+      </section>
+      <section class="login">
+        <div class="login-container">
+          <form class="login-form">
+            <label class="accessible-label" for="userName">Enter your username</label>
+            <input type="text" class="login-input-box" id="username" placeholder="username" required/>
+            <label class="accessible-label" for="password">Enter your password</label>
+            <input type="text" class="login-input-box" id="password" placeholder="password" required/>
+            <label class="accessible-label" for="loginButton"></label>
+            <input type="submit" class="login-button" id="loginButton" value="Log in"/>
+          </form>
+          <p class="login-message hidden" id="loginMessage">Invalid username or password</p>
+          <p class="error-message" id="loginFetchErrorMessage"></p>
+        </div>
       </section>
     </main>
     <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->

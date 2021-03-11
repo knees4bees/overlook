@@ -5,6 +5,11 @@ import { createBookings, createRooms, formatDate } from "./helpers";
 
 // ***** Query selectors *****
 const nameAndLogo = document.querySelector('.hotel-brand');
+const loginSection = document.querySelector('.login');
+const loginForm = document.querySelector('.login-form');
+const username = document.querySelector('#username');
+const password = document.querySelector('#password');
+const loginMessage = document.querySelector('#loginMessage');
 const dashboard = document.querySelector('.dashboard');
 const dateSearchForm = document.querySelector('.date-search-form');
 const chosenDate = document.querySelector('.date-selector');
@@ -19,6 +24,8 @@ const bookRoomFetchErrorMessage =
   document.querySelector('#bookRoomErrorMessage');
 const initialFetchErrorMessage = 
   document.querySelector('#initialFetchErrorMessage');
+const loginFetchErrorMessage = 
+  document.querySelector('#loginFetchErrorMessage');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
@@ -74,15 +81,7 @@ function createDashboard(values) {
 
   allBookings = 
     new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
-
   allRooms = new RoomsRepo(createRooms(rawRooms));
-
-  // TODO change this later so the user is not hard-coded
-  currentUser = new Customer({
-    id: 1,
-    name: 'Sasha Sosure'
-  });
-
   userBookings = allBookings.filterByCustomer(currentUser.id);
 
   renderLanding(currentUser, userBookings);
@@ -91,6 +90,7 @@ function createDashboard(values) {
 function renderLanding(currentUser, userBookings) {
   show(dashboard);
   hide(availableRooms);
+  hide(loginSection);
   desiredDate = null;
   renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
@@ -140,6 +140,7 @@ function showAvailableRooms(date) {
     show(dateApologyMessage);
   } else {
     hide(dashboard);
+    hide(loginSection);
     show(availableRooms);
     checkboxes.forEach(checkbox => checkbox.checked = true);
     renderRooms(roomsRepo);
@@ -261,6 +262,47 @@ function updateRoom(newBookingId, targetId) {
   show(confirmationContainer);
 }
 
+function login(username, password) {
+  if (isValidUsername(username) && isValidPassword(password)) {
+    makeCurrentUser(makeProposedId(username));
+  } else {
+    show(loginMessage);
+  }
+}
+
+function isValidUsername(username) {
+  const prettyUsername = username.trim().toLowerCase();
+  const proposedId = makeProposedId(username);
+
+  if (prettyUsername.startsWith('customer') && typeof(proposedId) === 'number' && proposedId > 0 && proposedId <= 50) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isValidPassword(password) {
+  if (password === 'overlook2021') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function makeProposedId(username) {
+  const proposedId = parseInt(username.slice(8));
+  return proposedId;
+}
+
+function makeCurrentUser(id) {
+  const fetchCustomer = fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(checkForError)
+    .then(data => currentUser = new Customer(data))
+    .then(loadData)
+    .catch(err => loginFetchErrorMessage.innerText = displayErrorMessage(err));
+}
+
+
 function clear(HTMLelement) {
   HTMLelement.innerHTML = '';
 }
@@ -275,7 +317,10 @@ function show(element) {
 
 
 // ***** Event listeners *****
-window.addEventListener('load', loadData);
+loginForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  login(username.value, password.value);
+})
 
 nameAndLogo.addEventListener('click', function() {
   renderLanding(currentUser, userBookings);
