@@ -19,18 +19,20 @@ form {
 }
 
 .date-selector {
-  margin-right: 25px;
-  padding: 5px;
-  height: 25px;
+  @include input-box;
+  // margin-right: 25px;
+  // padding: 5px;
+  // height: 25px;
 }
 
 .submit-button {
-  background-color: $accent-dark;
-  color: white;
-  // margin-left: 30px;
-  padding: 5px 15px;
-  // height: 25px;
-  font-size: 1.15rem;
+  @include submit-button;
+  // background-color: $accent-dark;
+  // color: white;
+  // // margin-left: 30px;
+  // padding: 5px 15px;
+  // // height: 25px;
+  // font-size: 1.15rem;
 }
 
 .apology-message {

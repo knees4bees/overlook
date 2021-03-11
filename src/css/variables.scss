@@ -13,3 +13,16 @@ $body-font: 'Open Sans', sans-serif;
 @mixin drop-shadow($color) {
   box-shadow: 0px 0px 7px $color;
 }
+
+@mixin input-box() {
+  margin-right: 25px;
+  padding: 5px;
+  height: 25px;
+}
+
+@mixin submit-button {
+  background-color: $accent-dark;
+  color: white;
+  padding: 5px 15px;
+  font-size: 1.15rem;
+}

@@ -11,6 +11,7 @@ const username = document.querySelector('#username');
 const password = document.querySelector('#password');
 const loginMessage = document.querySelector('#loginMessage');
 const dashboard = document.querySelector('.dashboard');
+const userInfo = document.querySelector('.user-info');
 const dateSearchForm = document.querySelector('.date-search-form');
 const chosenDate = document.querySelector('.date-selector');
 const dateApologyMessage = document.querySelector('#dateApologyMessage');
@@ -97,6 +98,7 @@ function renderLanding(currentUser, userBookings) {
 }
 
 function renderUserInfo(customer, userBookings) {
+  show(userInfo);
   const firstName = document.querySelector('#greetingName');
   const points = document.querySelector('#points');
 

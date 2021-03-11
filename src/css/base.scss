@@ -22,6 +22,26 @@ main {
 }
 
 
+// ***** login page *****
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 150px;
+  margin-top: 50px;
+}
+
+.login-input-box {
+  @include input-box;
+  padding-right: 5px;
+  margin-right: 0;
+}
+
+.login-button {
+  @include submit-button;
+}
+
+
 // ***** media queries *****
 @media screen and (max-width: 1200px) {
   .rooms-container {

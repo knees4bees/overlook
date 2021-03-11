@@ -14,13 +14,27 @@
         <i class="logo fab fa-pagelines"></i>
         <span class="hotel-name">The Overlook</span>
       </h1>
-      <h2 class="user-info">
+      <h2 class="user-info hidden">
         <span class="greeting">Hi, <span id="greetingName">User</span>!</span>
         <span class="points"><span id="points">0,000</span> points</span>
         <i class="fas fa-user hidden"></i>
       </h2>
     </header>
     <main>
+      <section class="login">
+        <div class="login-container">
+          <form class="login-form">
+            <label class="accessible-label" for="userName">Enter your username</label>
+            <input type="text" class="login-input-box" id="username" placeholder="username" required/>
+            <label class="accessible-label" for="password">Enter your password</label>
+            <input type="text" class="login-input-box" id="password" placeholder="password" required/>
+            <label class="accessible-label" for="loginButton"></label>
+            <input type="submit" class="login-button" id="loginButton" value="Log in"/>
+          </form>
+          <p class="login-message hidden" id="loginMessage">Invalid username or password</p>
+          <p class="error-message" id="loginFetchErrorMessage"></p>
+        </div>
+      </section>
       <section class="dashboard hidden">
         <section class="date-input">
           <form class="date-search-form">
@@ -60,28 +74,11 @@
                 <label class="room-type-label" id="singleRoomLabel" for="residentialSuite">Residential suite</label>
               </div>
             </section>
-            <!-- <section> -->
-              <!-- <input type="submit" class="submit-button" id="filterByTypeButton" value="See rooms"/> -->
-            <!-- </section> -->
           </form>
           <p class="apology-message" id="filterApologyMessage">We're so extremely sorry, <span id="apologyName"></span>but there are no rooms of that type available. Please try selecting a different room type.</p>
           <p class="error-message" id="bookRoomErrorMessage"></p>
         </section>
         <div class="rooms-container"></div>
-      </section>
-      <section class="login">
-        <div class="login-container">
-          <form class="login-form">
-            <label class="accessible-label" for="userName">Enter your username</label>
-            <input type="text" class="login-input-box" id="username" placeholder="username" required/>
-            <label class="accessible-label" for="password">Enter your password</label>
-            <input type="text" class="login-input-box" id="password" placeholder="password" required/>
-            <label class="accessible-label" for="loginButton"></label>
-            <input type="submit" class="login-button" id="loginButton" value="Log in"/>
-          </form>
-          <p class="login-message hidden" id="loginMessage">Invalid username or password</p>
-          <p class="error-message" id="loginFetchErrorMessage"></p>
-        </div>
       </section>
     </main>
     <!-- <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px"> -->
