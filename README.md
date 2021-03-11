@@ -4,6 +4,19 @@ This hotel management app was developed as part of an [assignment](https://front
 ## Overview of Overlook: Logging In and Booking a Room
 ![](assets/overlook.gif)
 
+#### Log-in Page
+<img width="700" alt="log-in page" src="./src/images/overlook-logging-in.png">
+
+#### Landing Page with Existing Bookings
+<img width="700" alt="landing page" src="./src/images/overlook-landing-page.png">
+
+#### Rooms Available on Selected Date
+<img width="700" alt="rooms available on chosen date" src="./src/images/overlook-available-rooms.png">
+
+#### Confirmation Message
+<img width="700" alt="a room is booked" src="./src/images/overlook-booking-confirmation.png">
+
+
 ## Learning Objectives
 1. OOP-driven code design
 2. Working with an API to fetch and post data
