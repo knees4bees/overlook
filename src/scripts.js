@@ -276,7 +276,11 @@ function isValidUsername(username) {
   const prettyUsername = username.trim().toLowerCase();
   const proposedId = makeProposedId(username);
 
-  if (prettyUsername.startsWith('customer') && typeof(proposedId) === 'number' && proposedId > 0 && proposedId <= 50) {
+  if (prettyUsername.startsWith('customer') 
+    && typeof(proposedId) === 'number' 
+    && proposedId > 0 
+    && proposedId <= 50
+  ) {
     return true;
   } else {
     return false;
@@ -297,13 +301,12 @@ function makeProposedId(username) {
 }
 
 function makeCurrentUser(id) {
-  const fetchCustomer = fetch(`http://localhost:3001/api/v1/customers/${id}`)
+  fetch(`http://localhost:3001/api/v1/customers/${id}`)
     .then(checkForError)
     .then(data => currentUser = new Customer(data))
     .then(loadData)
     .catch(err => loginFetchErrorMessage.innerText = displayErrorMessage(err));
 }
-
 
 function clear(HTMLelement) {
   HTMLelement.innerHTML = '';

@@ -9,7 +9,6 @@ class Room {
   }
 
   formatCost(cost) {
-    // NB returns a string
     return cost.toFixed(2);
   }
 }
