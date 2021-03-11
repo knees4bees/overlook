@@ -170,7 +170,7 @@ function renderRooms(roomsRepo) {
           </div>
         </div>
         <div class="reserve-room">
-          <div class="book-room-button" id="${room.number}-${desiredDate}">book room</div>
+          <button class="book-room-button" id="${room.number}-${desiredDate}">book room</button>
           <div class="hidden confirmation-container" id="confirmation-for-${room.number}-${desiredDate}">
             <p class="confirmation-message">You're booked!</p>
             <p class="confirmation-message">Confirmation number <span id="confirmation-number-for-${room.number}-${desiredDate}"></span></p>
