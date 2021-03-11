@@ -5,7 +5,13 @@ import { createBookings, createRooms, formatDate } from "./helpers";
 
 // ***** Query selectors *****
 const nameAndLogo = document.querySelector('.hotel-brand');
+const loginSection = document.querySelector('.login');
+const loginForm = document.querySelector('.login-form');
+const username = document.querySelector('#username');
+const password = document.querySelector('#password');
+const loginMessage = document.querySelector('#loginMessage');
 const dashboard = document.querySelector('.dashboard');
+const userInfo = document.querySelector('.user-info');
 const dateSearchForm = document.querySelector('.date-search-form');
 const chosenDate = document.querySelector('.date-selector');
 const dateApologyMessage = document.querySelector('#dateApologyMessage');
@@ -15,8 +21,12 @@ const checkboxes = document.querySelectorAll('.room-type');
 const filterApologyMessage = document.querySelector('#filterApologyMessage');
 const availableRooms = document.querySelector('.available-rooms');
 const roomsGrid = document.querySelector('.rooms-container');
-const bookRoomFetchErrorMessage = document.querySelector('#bookRoomErrorMessage');
-const initialFetchErrorMessage = document.querySelector('#initialFetchErrorMessage');
+const bookRoomFetchErrorMessage = 
+  document.querySelector('#bookRoomErrorMessage');
+const initialFetchErrorMessage = 
+  document.querySelector('#initialFetchErrorMessage');
+const loginFetchErrorMessage = 
+  document.querySelector('#loginFetchErrorMessage');
 
 
 let allBookings, allRooms, currentUser, userBookings, desiredDate;
@@ -44,7 +54,10 @@ function loadData() {
 
 function checkForError(response) {
   if (!response.ok) {
-    throw new Error('Something went wrong with your request. Please contact the site administrator for assistance.');
+    throw new Error(
+      'Something went wrong with your request. \
+      Please contact the site administrator for assistance.'
+    );
   } else {
     return response.json();
   }
@@ -69,15 +82,7 @@ function createDashboard(values) {
 
   allBookings = 
     new BookingsRepo(createBookings(rawBookings, rawCustomers, rawRooms));
-
   allRooms = new RoomsRepo(createRooms(rawRooms));
-
-  // TODO change this later so the user is not hard-coded
-  currentUser = new Customer({
-    id: 1,
-    name: 'Sasha Sosure'
-  });
-
   userBookings = allBookings.filterByCustomer(currentUser.id);
 
   renderLanding(currentUser, userBookings);
@@ -86,12 +91,14 @@ function createDashboard(values) {
 function renderLanding(currentUser, userBookings) {
   show(dashboard);
   hide(availableRooms);
+  hide(loginSection);
   desiredDate = null;
   renderUserInfo(currentUser, userBookings);
   renderBookings(userBookings);
 }
 
 function renderUserInfo(customer, userBookings) {
+  show(userInfo);
   const firstName = document.querySelector('#greetingName');
   const points = document.querySelector('#points');
 
@@ -135,6 +142,7 @@ function showAvailableRooms(date) {
     show(dateApologyMessage);
   } else {
     hide(dashboard);
+    hide(loginSection);
     show(availableRooms);
     checkboxes.forEach(checkbox => checkbox.checked = true);
     renderRooms(roomsRepo);
@@ -170,10 +178,19 @@ function renderRooms(roomsRepo) {
           </div>
         </div>
         <div class="reserve-room">
-          <div class="book-room-button" id="${room.number}-${desiredDate}">book room</div>
-          <div class="hidden confirmation-container" id="confirmation-for-${room.number}-${desiredDate}">
-            <p class="confirmation-message">You're booked!</p>
-            <p class="confirmation-message">Confirmation number <span id="confirmation-number-for-${room.number}-${desiredDate}"></span></p>
+          <button class="book-room-button" id="${room.number}-${desiredDate}">
+            book room
+          </button>
+          <div class="hidden confirmation-container" 
+            id="confirmation-for-${room.number}-${desiredDate}"
+          >
+            <p class="confirmation-message you-are-booked">You're booked!</p>
+            <p class="confirmation-message">
+              Confirmation number 
+              <span 
+                id="confirmation-number-for-${room.number}-${desiredDate}"
+              ></span>
+            </p>
           </div>
         </div>
       </div>`
@@ -231,7 +248,9 @@ function bookRoom(targetId) {
   })
     .then(checkForError)
     .then(data => updateRoom(data.newBooking.id, targetId))
-    .catch(err => bookRoomFetchErrorMessage.innerText = displayErrorMessage(err));
+    .catch(err => {
+      bookRoomFetchErrorMessage.innerText = displayErrorMessage(err)
+    });
 }
 
 function updateRoom(newBookingId, targetId) {
@@ -243,6 +262,50 @@ function updateRoom(newBookingId, targetId) {
   confirmationNumber.innerText = newBookingId;
   hide(targetButton);
   show(confirmationContainer);
+}
+
+function login(username, password) {
+  if (isValidUsername(username) && isValidPassword(password)) {
+    makeCurrentUser(makeProposedId(username));
+  } else {
+    show(loginMessage);
+  }
+}
+
+function isValidUsername(username) {
+  const prettyUsername = username.trim().toLowerCase();
+  const proposedId = makeProposedId(username);
+
+  if (prettyUsername.startsWith('customer') 
+    && typeof(proposedId) === 'number' 
+    && proposedId > 0 
+    && proposedId <= 50
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isValidPassword(password) {
+  if (password === 'overlook2021') {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function makeProposedId(username) {
+  const proposedId = parseInt(username.slice(8));
+  return proposedId;
+}
+
+function makeCurrentUser(id) {
+  fetch(`http://localhost:3001/api/v1/customers/${id}`)
+    .then(checkForError)
+    .then(data => currentUser = new Customer(data))
+    .then(loadData)
+    .catch(err => loginFetchErrorMessage.innerText = displayErrorMessage(err));
 }
 
 function clear(HTMLelement) {
@@ -259,7 +322,10 @@ function show(element) {
 
 
 // ***** Event listeners *****
-window.addEventListener('load', loadData);
+loginForm.addEventListener('submit', function(event) {
+  event.preventDefault();
+  login(username.value, password.value);
+})
 
 nameAndLogo.addEventListener('click', function() {
   renderLanding(currentUser, userBookings);

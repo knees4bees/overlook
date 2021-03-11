@@ -1,5 +1,4 @@
 class BookingsRepo {
-  // New plan: have this take in an array of pre-constructed Booking instances
   constructor(bookings) {
     this.bookings = [...bookings];
   }

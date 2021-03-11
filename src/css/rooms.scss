@@ -25,7 +25,7 @@
 
 .room-type-label {
   padding-left: 4px;
-  padding-right: 15px;
+  padding-right: 20px;
   font-size: 1.15rem;
 }
 
@@ -53,7 +53,6 @@
   margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  // grid-template-rows: repeat(2, 1fr);
   grid-gap: 15px;
 }
 
@@ -67,7 +66,6 @@
   background-color: white;
   border-radius: 5px;
   @include drop-shadow($main-medium);
-  // box-shadow: 0px 0px 7px $main-medium;
 
   p {
     margin: 10px;
@@ -91,7 +89,6 @@
 
 .book-room-button {
   align-self: center;
-  // margin-top: 15px;
   margin: 15px;
   padding: 10px;
   background-color: $accent-medium;
@@ -101,7 +98,6 @@
   border: 0.1rem solid $accent-dark;
   border-radius: 5px;
   @include drop-shadow($accent-dark);
-  // box-shadow: 0px 0px 7px $accent-dark;
 }
 
 .confirmation-message {
@@ -110,4 +106,9 @@
   width: 180px;
   color: $accent-dark;
   font-size: 1rem;
+}
+
+.you-are-booked {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
