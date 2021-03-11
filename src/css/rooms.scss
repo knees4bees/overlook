@@ -25,7 +25,7 @@
 
 .room-type-label {
   padding-left: 4px;
-  padding-right: 15px;
+  padding-right: 20px;
   font-size: 1.15rem;
 }
 
@@ -110,4 +110,9 @@
   width: 180px;
   color: $accent-dark;
   font-size: 1rem;
+}
+
+.you-are-booked {
+  font-size: 1.5rem;
+  font-weight: bold;
 }

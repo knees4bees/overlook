@@ -181,7 +181,7 @@ function renderRooms(roomsRepo) {
           <div class="hidden confirmation-container" 
             id="confirmation-for-${room.number}-${desiredDate}"
           >
-            <p class="confirmation-message">You're booked!</p>
+            <p class="confirmation-message you-are-booked">You're booked!</p>
             <p class="confirmation-message">
               Confirmation number 
               <span 
